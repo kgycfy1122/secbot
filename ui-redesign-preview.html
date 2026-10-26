@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>工作台 UI 方案预览</title>
+  <style>
+    :root{font-family:Inter,"PingFang SC","Microsoft YaHei",sans-serif;color:#172033;background:#f4f6f8;font-synthesis:none;text-rendering:optimizeLegibility}
+    *{box-sizing:border-box}body{margin:0;min-width:1180px}button{font:inherit;cursor:pointer}
+    .shell{min-height:900px;display:grid;grid-template-columns:232px minmax(0,1fr);background:#f4f6f8}
+    .sidebar{display:flex;flex-direction:column;border-right:1px solid #dfe5ec;background:#fff}
+    .brand{height:84px;display:flex;align-items:center;gap:12px;padding:0 22px;border-bottom:1px solid #edf0f4}
+    .brand-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:6px;color:#fff;background:#1769e8;font-weight:800;font-size:17px}
+    .brand-name{color:#142038;font-size:15px;font-weight:700}.brand-meta{margin-top:3px;color:#94a3b8;font-size:9px;letter-spacing:1.3px}
+    .nav{padding:22px 12px}.nav-label{margin:0 12px 8px;color:#9aa7b8;font-size:11px;font-weight:700;letter-spacing:.08em}.nav-label:not(:first-child){margin-top:23px}
+    .nav-item{width:100%;height:42px;display:flex;align-items:center;gap:11px;margin:3px 0;padding:0 12px;border:1px solid transparent;border-radius:6px;color:#536176;background:#fff;text-align:left;font-size:14px;font-weight:600}
+    .nav-item svg{width:17px;height:17px;flex:none;stroke:currentColor;stroke-width:1.8;fill:none}.nav-item:hover{background:#f7faff;border-color:#dbe8fb;color:#1769e8}.nav-item.active{border-color:#c9ddfb;color:#0f5fce;background:#edf5ff}.nav-item .count{margin-left:auto;color:#7f8da1;font-size:11px;font-weight:500}
+    .sidebar-foot{margin-top:auto;padding:14px 18px;border-top:1px solid #edf0f4}.collapse{width:100%;height:36px;display:flex;align-items:center;gap:10px;padding:0 10px;border:0;border-radius:6px;color:#6b7890;background:#fff;font-size:12px;font-weight:600}.collapse:hover{color:#1769e8;background:#f0f6ff}.collapse svg{width:16px;height:16px;stroke:currentColor;fill:none}
+    .main{min-width:0}.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 34px;border-bottom:1px solid #dfe5ec;background:#fff}.crumb{display:flex;align-items:center;gap:10px;color:#9aa7b8;font-size:13px}.crumb strong{color:#233149;font-weight:700}.top-actions{display:flex;align-items:center;gap:18px}.top-icon{width:30px;height:30px;display:grid;place-items:center;border:0;color:#62728a;background:transparent}.top-icon svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.7;fill:none}.user{display:flex;align-items:center;gap:9px;padding-left:18px;border-left:1px solid #e5eaf0}.avatar{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;color:#1258bc;background:#e2efff;font-size:13px;font-weight:700}.user-copy strong{display:block;color:#243149;font-size:12px}.user-copy span{display:block;margin-top:2px;color:#91a0b4;font-size:10px}
+    .workspace-tabs{height:40px;display:flex;align-items:stretch;padding:0 28px;border-bottom:1px solid #e1e7ee;background:#fafbfd}.workspace-tab{display:flex;align-items:center;gap:12px;padding:0 15px;border-right:1px solid #e7ebf0;color:#63738b;font-size:12px}.workspace-tab.active{color:#1769e8;background:#fff;font-weight:700;border-top:2px solid #1769e8}.workspace-tab button{border:0;color:#98a5b5;background:transparent}
+    .content{max-width:1440px;margin:0 auto;padding:31px 34px 44px}.heading{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px}.eyebrow{margin:0 0 7px;color:#8d9bad;font-size:11px;font-weight:700;letter-spacing:.08em}.heading h1{margin:0;color:#172033;font-size:30px;line-height:1.15;letter-spacing:-.02em}.heading p{margin:8px 0 0;color:#728198;font-size:13px}.heading-actions{display:flex;align-items:center;gap:9px}.ghost,.primary{height:36px;padding:0 14px;border-radius:6px;font-size:12px;font-weight:600}.ghost{border:1px solid #d8e0e9;color:#5f6e83;background:#fff}.primary{border:1px solid #1769e8;color:#fff;background:#1769e8}.primary:hover{background:#0f5fce}
+    .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}.summary-item{min-height:88px;padding:15px 16px;border:1px solid #dfe6ee;border-radius:6px;background:#fff}.summary-item span{display:block;color:#8290a4;font-size:12px}.summary-item strong{display:block;margin-top:10px;color:#172033;font-size:24px;line-height:1}.summary-item em{margin-left:5px;color:#8190a4;font-size:11px;font-style:normal;font-weight:500}
+    .panel{border:1px solid #dfe6ee;border-radius:6px;background:#fff}.toolbar{display:flex;align-items:center;gap:9px;padding:14px 16px;border-bottom:1px solid #e5eaf0}.search{width:300px;height:34px;display:flex;align-items:center;gap:8px;padding:0 11px;border:1px solid #d5dee9;border-radius:5px;color:#92a0b2;background:#fff;font-size:12px}.search svg{width:15px;height:15px;stroke:currentColor;fill:none}.select{height:34px;min-width:132px;padding:0 11px;border:1px solid #d5dee9;border-radius:5px;color:#66758a;background:#fff;font-size:12px;text-align:left}.toolbar .query{height:34px;padding:0 14px;border:1px solid #1769e8;border-radius:5px;color:#1769e8;background:#fff;font-size:12px;font-weight:600}.toolbar .query:hover{color:#fff;background:#1769e8}.toolbar-note{margin-left:auto;color:#8694a8;font-size:12px}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}th{height:42px;color:#708097;background:#f7f9fb;font-size:12px;font-weight:700;text-align:left}td{height:55px;border-top:1px solid #edf1f5;color:#405069;font-size:12px}th,td{padding:0 16px}tbody tr:hover{background:#f8fbff}.style-cell{display:flex;align-items:center;gap:10px}.thumb{width:32px;height:32px;display:grid;place-items:center;border-radius:5px;color:#55749f;background:#e8f1fc;font-size:11px;font-weight:700}.style-cell strong{color:#1d2b41;font-size:12px}.style-cell span{display:block;margin-top:3px;color:#8b99ab;font-size:11px}.tag{display:inline-flex;align-items:center;height:23px;padding:0 8px;border:1px solid #bce6cb;border-radius:4px;color:#258347;background:#f2fbf5;font-size:11px}.tag.blue{border-color:#c6dcfa;color:#1769e8;background:#f1f7ff}.muted{color:#96a2b2}.progress{display:flex;align-items:center;gap:8px}.progress-track{width:68px;height:5px;border-radius:5px;background:#e7edf5}.progress-track i{display:block;height:100%;border-radius:5px;background:#1769e8}.more{border:0;color:#1769e8;background:transparent;font-size:12px;font-weight:600}
+    .footer{display:flex;justify-content:flex-end;gap:18px;padding:14px 16px;color:#8290a4;font-size:12px}.pager{display:flex;gap:6px}.page{width:27px;height:27px;display:grid;place-items:center;border:1px solid #dce4ed;border-radius:4px;background:#fff}.page.active{border-color:#1769e8;color:#fff;background:#1769e8}
+    @media(max-width:1200px){.content{padding-left:24px;padding-right:24px}.topbar{padding:0 24px}.summary{grid-template-columns:repeat(4,minmax(145px,1fr))}.content{overflow-x:auto}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">W</div><div><div class="brand-name">威思服饰</div><div class="brand-meta">WISE FASHION</div></div></div>
+      <nav class="nav">
+        <div class="nav-label">业务总览</div>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9H5v-7"/><path d="M9 20v-5h6v5"/></svg>工作台</button>
+        <div class="nav-label">款式与库存</div>
+        <button class="nav-item active"><svg viewBox="0 0 24 24"><path d="m4 7 8-4 8 4v10l-8 4-8-4V7Z"/><path d="m4 7 8 4 8-4M12 11v10"/></svg>款式管理<span class="count">8</span></button>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg>品类规划</button>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM15 3v5h5M8 12h8M8 16h6"/></svg>纸样管理<span class="count">4</span></button>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v6H4zM14 15h6v6h-6z"/></svg>搭配管理</button>
+        <div class="nav-label">系统管理</div>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-3.1 3-5 7-5s6.2 1.9 7 5"/></svg>用户管理</button>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h5"/></svg>系统日志</button>
+        <button class="nav-item"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>公告管理</button>
+      </nav>
+      <div class="sidebar-foot"><button class="collapse"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/><path d="M9 12h11"/></svg>收起菜单</button></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="crumb"><span>威思服饰</span><b>/</b><strong>款式管理</strong></div><div class="top-actions"><button class="top-icon" aria-label="通知"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></button><div class="user"><div class="avatar">a</div><div class="user-copy"><strong>admin</strong><span>超级管理员</span></div></div></div></header>
+      <div class="workspace-tabs"><div class="workspace-tab active">款式管理-产品 <button>×</button></div><div class="workspace-tab">公告管理 <button>×</button></div></div>
+      <section class="content">
+        <div class="heading"><div><p class="eyebrow">STYLE WORKSPACE / PRODUCT CATALOG</p><h1>款式管理</h1><p>集中查看款号、品类和当前开发进度</p></div><div class="heading-actions"><button class="ghost">导出列表</button><button class="primary">＋ 新增款式</button></div></div>
+        <div class="summary"><div class="summary-item"><span>全部款式</span><strong>8<em>款</em></strong></div><div class="summary-item"><span>已完成</span><strong>3<em>款</em></strong></div><div class="summary-item"><span>开发中</span><strong>4<em>款</em></strong></div><div class="summary-item"><span>待处理</span><strong>1<em>款</em></strong></div></div>
+        <section class="panel"><div class="toolbar"><div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 5 5"/></svg><span>搜索款号、品类或设计师</span></div><button class="select">全部品类　⌄</button><button class="select">全部进度　⌄</button><button class="query">查询</button><button class="ghost">重置</button><span class="toolbar-note">共 8 条款式</span></div>
+          <table><thead><tr><th style="width:28%">款式</th><th style="width:13%">上新日期</th><th style="width:13%">品类</th><th style="width:13%">设计师</th><th style="width:13%">链路</th><th style="width:12%">总进度</th><th style="width:8%">操作</th></tr></thead><tbody>
+            <tr><td><div class="style-cell"><div class="thumb">A1</div><div><strong>STYLE-1791940833330</strong><span>秋冬基础款</span></div></div></td><td>2026-10-13</td><td>衬衫</td><td>周宁</td><td>转自研板房</td><td><span class="tag">已完成</span></td><td><button class="more">查看</button></td></tr>
+            <tr><td><div class="style-cell"><div class="thumb">A2</div><div><strong>STYLE-1791940353819</strong><span>常规开发款</span></div></div></td><td class="muted">—</td><td>衬衫</td><td>周宁</td><td>转自研研发</td><td><div class="progress"><div class="progress-track"><i style="width:58%"></i></div><span>搭配</span></div></td><td><button class="more">查看</button></td></tr>
+            <tr><td><div class="style-cell"><div class="thumb">B5</div><div><strong>5</strong><span>基础针织</span></div></div></td><td>2026-10-14</td><td>衬衫</td><td>康国洋</td><td>AI款</td><td><span class="tag blue">开发中</span></td><td><button class="more">查看</button></td></tr>
+          </tbody></table><div class="footer"><span>共 8 条</span><span>20 条/页</span><div class="pager"><span class="page">‹</span><span class="page active">1</span><span class="page">›</span></div></div>
+        </section>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
